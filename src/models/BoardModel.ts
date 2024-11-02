@@ -15,6 +15,17 @@ export enum BoardState {
     Fail = 'fail',
     Win = 'win',
 }
+
+const INITIAL_COINS = 10000;
+const INITIAL_HEALTH = 500;
+const INITIAL_FOOD = 200;
+const INITIAL_JOY = 300;
+
+// TODO - bring back values
+// const INITIAL_COINS = 1000;
+// const INITIAL_HEALTH = 5;
+// const INITIAL_FOOD = 2;
+// const INITIAL_JOY = 3;
 export class BoardModel extends ObservableModel {
     private _coins: number;
     private _health: number;
@@ -215,10 +226,10 @@ export class BoardModel extends ObservableModel {
             return buttonModel;
         });
 
-        this._coins = 1000;
-        this._health = 5;
-        this._food = 2;
-        this._joy = 3;
+        this._coins = INITIAL_COINS;
+        this._health = INITIAL_HEALTH;
+        this._food = INITIAL_FOOD;
+        this._joy = INITIAL_JOY;
 
         this.state = BoardState.FirstScene;
     }

@@ -6,7 +6,7 @@ const path = require('path');
 
 module.exports = () => {
     const compression = {
-        'assets/images/**/*.jpg': 80,
+        'assets/images/**/*.jpg': 100,
         'assets/images/**/*.png': [80, 90],
     };
     const paths = Object.keys(compression);

@@ -189,6 +189,22 @@ export const drawBounds = (container: any, color = 0xffffff * Math.random(), alp
     return gr;
 };
 
+export const drawPoint = (
+    container: any,
+    x: number,
+    y: number,
+    radius = 5,
+    color = 0xffffff * Math.random(),
+    alpha = 0.5,
+): Graphics => {
+    const gr = new Graphics();
+    gr.beginFill(color, alpha);
+    gr.drawCircle(x, y, radius);
+    gr.endFill();
+    container.addChild(gr);
+    return gr;
+};
+
 export const fitText = (textGameObject: Text, width: number, height: number) => {
     const { width: textWidth, height: textHeight } = textGameObject;
     const { fontSize } = textGameObject.style;
