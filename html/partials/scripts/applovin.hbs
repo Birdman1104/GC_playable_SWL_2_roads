@@ -1,0 +1,18 @@
+
+  <script>
+    window.onload = () => {
+      window.createGame();
+    };
+    window.gameReadyCall = () => {};
+    window.installCTA = () => {
+      const store = navigator.userAgent.toLowerCase().indexOf("android") > -1 ? "google" : "apple";
+      switch (store) {
+        case "google":
+          mraid.open("https://play.google.com/store/apps/details?id=com.rbx.city.android&hl=en");
+          break;
+        case "apple":
+          mraid.open("https://apps.apple.com/ru/app/global-city-build-a-megapolis/id1455860184?l=en-GB");
+          break;
+      }
+    };
+  </script>
