@@ -13,7 +13,7 @@ export class Area extends Container {
 
     constructor(private config: AreaModel) {
         super();
-
+        this._buildingType = config.building;
         this.build();
     }
 
@@ -143,9 +143,12 @@ export class Area extends Container {
     }
 
     private build() {
-        if (this.config.building) {
+        if (this.buildingType) {
             this.buildParticlesContainer();
             this.buildBuilding();
+            if (this.buildingType === BuildingType.FortuneWheel) {
+                this.buildGlow();
+            }
         } else {
             this.buildArea();
         }
@@ -160,6 +163,20 @@ export class Area extends Container {
         this.building = makeSprite(getBuildingImgConfig(this.config.building));
         this.particlesContainer.position.set(0, -this.building.height / 2);
         this.addChild(this.building);
+    }
+
+    private buildGlow(): void {
+        const glow = makeSprite({ texture: Images['game/fortune_wheel_glow'], anchor: new Point(0.5, 0.8) });
+        this.addChild(glow);
+
+        anime({
+            targets: glow,
+            alpha: 0,
+            duration: 700,
+            loop: true,
+            easing: 'linear',
+            direction: 'alternate',
+        });
     }
 
     private buildParticlesContainer() {
