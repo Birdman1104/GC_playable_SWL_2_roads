@@ -61,9 +61,9 @@ export class Area extends Container {
 
         for (let i = 0; i < rnd; i++) {
             const DIFF_Y = Math.random() * 0.5 + 0.5;
-            const TARGET_X = Math.random() * 100 - 50;
-            const TOP_Y = Math.random() * 50 - 150;
-            const ANGLE = Math.random() * 180 * (Math.random() > 0.5 ? 1 : -1);
+            const TARGET_X = Math.random() * this.building.width - this.building.width / 2;
+            const TOP_Y = Math.random() * 50 - Math.min(Math.max(this.building.height * 1.5, 130), 220);
+            const ANGLE = Math.random() * 360 * (Math.random() > 0.5 ? 1 : -1);
 
             const particle = makeSprite({ texture, anchor: new Point(0.5, 0.5) });
             particle.position.set(PARTICLE_X, PARTICLE_Y);
@@ -93,7 +93,7 @@ export class Area extends Container {
         this._buildingType = buildingType;
         this.building = makeSprite(getBuildingImgConfig(buildingType));
         this.building.scale.set(0);
-        this.particlesContainer.position.set(0, -this.building.height / 2);
+        this.particlesContainer.position.set(0, 40);
         anime({
             targets: this.area.scale,
             x: 0,
@@ -108,7 +108,11 @@ export class Area extends Container {
                     duration: 200,
                     easing: 'easeInOutSine',
                     complete: () => {
-                        buildingType === BuildingType.House && this.emit('animationComplete');
+                        if (buildingType === BuildingType.House) {
+                            this.emit('animationComplete');
+                        } else {
+                            this.playParticleAnimation();
+                        }
                     },
                 });
             },
@@ -182,7 +186,7 @@ const getParticleImage = (building: BuildingType): string => {
             return Images['game/health_small'];
         case BuildingType.Food:
             return Images['game/burger_small'];
-        case BuildingType.Park:
+        case BuildingType.WinterFountain:
             return Images['game/emoji_small'];
         case BuildingType.House:
             return Images['game/coin_small'];
