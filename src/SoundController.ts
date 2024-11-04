@@ -17,6 +17,7 @@ class SoundControl {
 
     public constructor() {
         lego.event
+            .on('muteSound', this.focusChange, this)
             .on(SoundEvents.Mute, this.mute, this)
             .on(SoundEvents.Unmute, this.unmute, this)
             .on(BoardEvents.BkgPointerDown, this.playClick, this)

@@ -21,10 +21,13 @@ const BOUNDS = {
     landscapeNarrow: { x: -400, y: -380, width: 800, height: 700 },
 };
 
+const RELEASE_CAR_INTERVAL = 3;
 export class BoardView extends Container {
     private bkg: Sprite;
     private carPaths: CarPath[] = [];
     private areas: Area[] = [];
+
+    private carsInterval = 0;
 
     constructor() {
         super();
@@ -71,9 +74,9 @@ export class BoardView extends Container {
     private onAreasUpdate(areas: AreaModel[]): void {
         this.areas = areas.map((a) => {
             const area = new Area(a);
-            area.on('animationComplete', () => {
-                delayRunnable(0.3, () => lego.event.emit(BoardEvents.HouseAnimationComplete));
-            });
+            area.on('animationComplete', () =>
+                delayRunnable(0.3, () => lego.event.emit(BoardEvents.HouseAnimationComplete)),
+            );
             area.position.set(a.x, a.y);
             this.addChild(area);
             return area;
@@ -92,8 +95,6 @@ export class BoardView extends Container {
         const area = this.getBuildingByUuid(uuid);
         if (!area) return;
         area.addBuilding(newBuilding);
-
-        this.moveCar();
     }
 
     private moveCar(): void {
@@ -103,6 +104,12 @@ export class BoardView extends Container {
 
     private onCoinsUpdate(): void {
         this.houseAreas.forEach((area) => area.playCoinsAnimation());
+
+        this.carsInterval += 1;
+        if (this.carsInterval >= RELEASE_CAR_INTERVAL) {
+            this.carsInterval = 0;
+            this.moveCar();
+        }
     }
 
     private buildBkg(): void {

@@ -34,8 +34,8 @@ export class CoinsBar extends Container {
     private onCoinsUpdate(value: number): void {
         delayRunnable(0.35, () => {
             const scale = value < +this.coinsText.text ? 0.8 : 1.2;
-            this.coinsText.text = `${value}`;
-            fitText(this.coinsText, 90, 45);
+            this.coinsText.text = Number.isInteger(value) ? `${value}` : `${value.toFixed(1)}`;
+            fitText(this.coinsText, 80, 45);
             anime({
                 targets: this.coinsText.scale,
                 x: scale,
