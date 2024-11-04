@@ -21,7 +21,8 @@ const BOUNDS = {
     landscapeNarrow: { x: -400, y: -380, width: 800, height: 700 },
 };
 
-const RELEASE_CAR_INTERVAL = 3;
+const CAR_INTERVAL = 4;
+
 export class BoardView extends Container {
     private bkg: Sprite;
     private carPaths: CarPath[] = [];
@@ -69,6 +70,12 @@ export class BoardView extends Container {
     private build(): void {
         this.buildBkg();
         this.buildCarPaths();
+
+        this.moveCar();
+    }
+
+    private releaseCar(): void {
+        delayRunnable(CAR_INTERVAL, () => this.moveCar());
     }
 
     private onAreasUpdate(areas: AreaModel[]): void {
@@ -100,16 +107,12 @@ export class BoardView extends Container {
     private moveCar(): void {
         const road = sample(this.carPaths);
         road.move();
+
+        this.releaseCar();
     }
 
     private onCoinsUpdate(): void {
         this.houseAreas.forEach((area) => area.playCoinsAnimation());
-
-        this.carsInterval += 1;
-        if (this.carsInterval >= RELEASE_CAR_INTERVAL) {
-            this.carsInterval = 0;
-            this.moveCar();
-        }
     }
 
     private buildBkg(): void {
