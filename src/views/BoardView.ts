@@ -36,15 +36,6 @@ export class BoardView extends Container {
             .on(BoardModelEvents.CoinsUpdate, this.onCoinsUpdate, this);
 
         this.build();
-
-        this.carPaths = PATHS.map((path, i) => {
-            console.warn(i);
-
-            const carPath = new CarPath(path);
-            carPath.move();
-            this.addChild(carPath);
-            return carPath;
-        });
     }
 
     get viewName() {
@@ -91,6 +82,17 @@ export class BoardView extends Container {
             this.addChild(area);
             return area;
         });
+
+        this.buildCarPaths();
+    }
+
+    private buildCarPaths(): void {
+        this.carPaths = PATHS.map((path, i) => {
+            const carPath = new CarPath(path);
+            carPath.move();
+            this.addChild(carPath);
+            return carPath;
+        });
     }
 
     private onGameStateUpdate(state: GameState): void {
@@ -100,8 +102,13 @@ export class BoardView extends Container {
     private onAreaBuildingUpdate(newBuilding: BuildingType, oldBuilding: BuildingType, uuid): void {
         const area = this.getBuildingByUuid(uuid);
         if (!area) return;
-        this.carPaths.forEach((path) => path.move());
+        this.removeChild(area);
+        this.addChild(area);
         area.addBuilding(newBuilding);
+    }
+
+    private moveCars(): void {
+        this.carPaths.forEach((path) => path.move());
     }
 
     private onCoinsUpdate(): void {
