@@ -68,6 +68,8 @@ export const assets = {
         'game/progress_bkg.png': require('../assets/images/game/progress_bkg.png').default,
         'game/provide_for_citizens.png': require('../assets/images/game/provide_for_citizens.png').default,
         'game/rectangle.png': require('../assets/images/game/rectangle.png').default,
+        'game/sound_off.png': require('../assets/images/game/sound_off.png').default,
+        'game/sound_on.png': require('../assets/images/game/sound_on.png').default,
         'game/square.png': require('../assets/images/game/square.png').default,
         'game/winter_fountain.png': require('../assets/images/game/winter_fountain.png').default,
     },
@@ -144,6 +146,8 @@ export const Images = {
     'game/progress_bkg': 'game/progress_bkg.png',
     'game/provide_for_citizens': 'game/provide_for_citizens.png',
     'game/rectangle': 'game/rectangle.png',
+    'game/sound_off': 'game/sound_off.png',
+    'game/sound_on': 'game/sound_on.png',
     'game/square': 'game/square.png',
     'game/winter_fountain': 'game/winter_fountain.png',
 };

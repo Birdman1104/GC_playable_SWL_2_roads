@@ -1,4 +1,4 @@
-import { CellScale } from '@armathai/pixi-grid';
+import { CellAlign, CellScale } from '@armathai/pixi-grid';
 import { lp } from '../../utils';
 
 export const getForegroundGridConfig = () => {
@@ -9,7 +9,7 @@ const getForegroundGridLandscapeConfig = () => {
     const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
     return {
         name: 'foreground',
-        // debug: { color: 0xff5027 },
+        debug: { color: 0xff5027 },
         bounds,
         cells: [
             {
@@ -32,6 +32,11 @@ const getForegroundGridLandscapeConfig = () => {
                 name: 'blocker',
                 scale: CellScale.fill,
                 bounds: { x: 0, y: 0, width: 1, height: 1 },
+            },
+            {
+                name: 'sound',
+                align: CellAlign.leftBottom,
+                bounds: { x: 0, y: 0.9, width: 0.1, height: 0.1 },
             },
         ],
     };
@@ -64,6 +69,11 @@ const getForegroundGridPortraitConfig = () => {
                 name: 'blocker',
                 scale: CellScale.fill,
                 bounds: { x: 0, y: 0, width: 1, height: 1 },
+            },
+            {
+                name: 'sound',
+                align: CellAlign.leftBottom,
+                bounds: { x: 0, y: 0.9, width: 0.1, height: 0.1 },
             },
         ],
     };

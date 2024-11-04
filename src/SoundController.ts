@@ -1,6 +1,6 @@
 import { lego } from '@armathai/lego';
 import { Howl } from 'howler';
-import { BoardEvents, BottomBarEvents } from './events/MainEvents';
+import { BoardEvents, BottomBarEvents, SoundEvents } from './events/MainEvents';
 import { AreaModelEvents, BoardModelEvents } from './events/ModelEvents';
 import { BoardState } from './models/BoardModel';
 import { ATTENTION } from './sounds/attention';
@@ -13,9 +13,12 @@ import { delayRunnable } from './utils';
 let i = 0;
 class SoundControl {
     private sounds: any;
+    private isMutedFromIcon = false;
+
     public constructor() {
         lego.event
-            .on('muteSound', this.mute, this)
+            .on(SoundEvents.Mute, this.mute, this)
+            .on(SoundEvents.Unmute, this.unmute, this)
             .on(BoardEvents.BkgPointerDown, this.playClick, this)
             .on(BottomBarEvents.ButtonClicked, this.playClick, this)
             .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
@@ -60,7 +63,7 @@ class SoundControl {
     }
 
     private onBoardStateUpdate(state: BoardState): void {
-        if(state === BoardState.FirstScene) {
+        if (state === BoardState.FirstScene) {
             this.playTheme();
         }
     }
@@ -85,11 +88,27 @@ class SoundControl {
         this.sounds.theme.play();
     }
 
-
-    private mute(muted: boolean): void {
+    private mute(): void {
+        this.isMutedFromIcon = true;
         for (const [key, value] of Object.entries(this.sounds)) {
             // @ts-ignore
-            value.volume(muted ? 0 : key === 'theme' ? 0.3 : 1);
+            value.volume(0);
+        }
+    }
+
+    private unmute(): void {
+        this.isMutedFromIcon = false;
+        for (const [key, value] of Object.entries(this.sounds)) {
+            // @ts-ignore
+            value.volume(key === 'theme' ? 0.3 : 1);
+        }
+    }
+
+    private focusChange(outOfFocus: boolean): void {
+        if (this.isMutedFromIcon) return;
+        for (const [key, value] of Object.entries(this.sounds)) {
+            // @ts-ignore
+            value.volume(outOfFocus ? 0 : key === 'theme' ? 0.3 : 1);
         }
     }
 }

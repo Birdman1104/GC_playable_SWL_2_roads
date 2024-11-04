@@ -8,6 +8,11 @@ export const MainGameEvents = {
     MainViewReady: 'MainGameEventsMainViewReady',
 };
 
+export const SoundEvents = {
+    Mute: 'SoundEventsMute',
+    Unmute: 'SoundEventsUnmute',
+};
+
 export const BoardEvents = {
     HouseAnimationComplete: 'BoardEventsHouseAnimationComplete',
     BkgPointerDown: 'BoardEventsBkgPointerDown',

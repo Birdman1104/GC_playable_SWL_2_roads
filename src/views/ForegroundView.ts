@@ -10,12 +10,14 @@ import { BoardState } from '../models/BoardModel';
 import { HintModel } from '../models/HintModel';
 import { callIfExists, delayRunnable, makeSprite, tweenToCell } from '../utils';
 import { HintView } from './HintView';
+import { Sound } from './SoundView';
 
 // TODO - bring back value
 const TEXT_DISPLAY_DURATION = 2;
 // const TEXT_DISPLAY_DURATION = 0.2;
 
 export class ForegroundView extends PixiGrid {
+    private sound: Sound;
     private hint: HintView | null;
     private blocker: Graphics;
     private buildText: Sprite;
@@ -26,6 +28,7 @@ export class ForegroundView extends PixiGrid {
 
         lego.event
             .on(AdModelEvents.StatusUpdate, this.onStatusUpdate, this)
+            .on(AdModelEvents.SoundUpdate, this.onSoundUpdate, this)
             .on(AdModelEvents.HintUpdate, this.onHintUpdate, this)
             .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this);
     }
@@ -55,16 +58,19 @@ export class ForegroundView extends PixiGrid {
         this.blocker.endFill();
         this.blocker.alpha = 0;
         this.setChild('blocker', this.blocker);
+        this.bringToFront(this.sound, 'sound');
     }
 
     private buildBuildText(): void {
         this.buildText = makeSprite({ texture: Images['game/build_a_house'] });
         this.setChild('text_from', this.buildText);
+        this.bringToFront(this.sound, 'sound');
     }
 
     private buildProvideText(): void {
         this.provideText = makeSprite({ texture: Images['game/provide_for_citizens'] });
         this.setChild('text_from', this.provideText);
+        this.bringToFront(this.sound, 'sound');
     }
 
     private onStatusUpdate(status: AdStatus): void {
@@ -157,5 +163,18 @@ export class ForegroundView extends PixiGrid {
             easing: 'easeInOutSine',
             complete: () => callIfExists(cb),
         });
+    }
+
+    private onSoundUpdate(sound: boolean): void {
+        if (sound) {
+            this.sound = new Sound();
+            this.setChild('sound', this.sound);
+        }
+    }
+
+    private bringToFront(child: any, cell: string): void {
+        if (!child) return;
+        this.removeContent(child);
+        this.setChild(cell, child);
     }
 }
