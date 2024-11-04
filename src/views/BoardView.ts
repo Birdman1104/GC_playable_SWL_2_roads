@@ -4,10 +4,9 @@ import { Images } from '../assets';
 import { PATHS } from '../configs/Paths';
 import { TREES } from '../configs/TreesConfig';
 import { BoardEvents } from '../events/MainEvents';
-import { AreaModelEvents, BoardModelEvents, GameModelEvents } from '../events/ModelEvents';
+import { AreaModelEvents, BoardModelEvents } from '../events/ModelEvents';
 import { AreaModel, BuildingType } from '../models/AreaModel';
-import { GameState } from '../models/GameModel';
-import { delayRunnable, isNarrowScreen, isSquareLikeScreen, lp, makeSprite } from '../utils';
+import { delayRunnable, isNarrowScreen, isSquareLikeScreen, lp, makeSprite, sample } from '../utils';
 import { Area } from './Area';
 import { CarPath } from './CarPath';
 
@@ -31,7 +30,6 @@ export class BoardView extends Container {
         super();
 
         lego.event
-            .on(GameModelEvents.StateUpdate, this.onGameStateUpdate, this)
             .on(BoardModelEvents.AreasUpdate, this.onAreasUpdate, this)
             .on(AreaModelEvents.BuildingUpdate, this.onAreaBuildingUpdate, this)
             .on(BoardModelEvents.CoinsUpdate, this.onCoinsUpdate, this);
@@ -65,10 +63,6 @@ export class BoardView extends Container {
         return new Rectangle(x, y, width, height);
     }
 
-    public rebuild(): void {
-        // drawPoint(this, 0, 0);
-    }
-
     private build(): void {
         this.buildBkg();
     }
@@ -90,14 +84,9 @@ export class BoardView extends Container {
     private buildCarPaths(): void {
         this.carPaths = PATHS.map((path, i) => {
             const carPath = new CarPath(path);
-            carPath.move();
             this.addChild(carPath);
             return carPath;
         });
-    }
-
-    private onGameStateUpdate(state: GameState): void {
-        //
     }
 
     private onAreaBuildingUpdate(newBuilding: BuildingType, oldBuilding: BuildingType, uuid): void {
@@ -106,10 +95,13 @@ export class BoardView extends Container {
         this.removeChild(area);
         this.addChild(area);
         area.addBuilding(newBuilding);
+
+        this.moveCar();
     }
 
-    private moveCars(): void {
-        this.carPaths.forEach((path) => path.move());
+    private moveCar(): void {
+        const road = sample(this.carPaths);
+        road.move();
     }
 
     private onCoinsUpdate(): void {
