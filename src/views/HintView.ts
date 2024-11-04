@@ -2,13 +2,12 @@ import { lego } from '@armathai/lego';
 import anime from 'animejs';
 import { Container, Point, Sprite } from 'pixi.js';
 import { Images } from '../assets';
-import { BoardModelEvents, HintModelEvents } from '../events/ModelEvents';
+import { HintModelEvents } from '../events/ModelEvents';
 import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
 import { getViewByProperty, makeSprite } from '../utils';
 
 export class HintView extends Container {
-    private boardState: BoardState;
     private hand: Sprite;
     private hintPositions: Point[] = [];
     private currentPoint = 0;
@@ -16,9 +15,7 @@ export class HintView extends Container {
     constructor() {
         super();
 
-        lego.event
-            .on(HintModelEvents.VisibleUpdate, this.onHintVisibleUpdate, this)
-            .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this);
+        lego.event.on(HintModelEvents.VisibleUpdate, this.onHintVisibleUpdate, this);
 
         this.build();
         this.hide();
@@ -31,19 +28,12 @@ export class HintView extends Container {
     public destroy(): void {
         this.removeTweens();
         lego.event.off(HintModelEvents.VisibleUpdate, this.onHintVisibleUpdate, this);
-        lego.event.off(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this);
 
         super.destroy();
     }
 
     private onHintVisibleUpdate(visible: boolean): void {
         visible ? this.show() : this.hide();
-    }
-
-    private onBoardStateUpdate(newState: BoardState): void {
-        console.warn(this.boardState);
-
-        this.boardState = newState;
     }
 
     private build(): void {
@@ -55,6 +45,7 @@ export class HintView extends Container {
     private show(): void {
         this.removeTweens();
         this.hintPositions = this.getHintPosition();
+        if (this.hintPositions.length === 0) return;
         this.currentPoint = 0;
 
         this.showFirstTime();

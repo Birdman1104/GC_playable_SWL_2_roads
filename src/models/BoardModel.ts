@@ -141,7 +141,7 @@ export class BoardModel extends ObservableModel {
     }
 
     public enableAllButtons(): void {
-        this.buttons.forEach((b) => (b.isActive = true));
+        this.buttons.forEach((b) => (b.isActive = this._coins >= b.price));
     }
 
     public addCoins(value: number): void {

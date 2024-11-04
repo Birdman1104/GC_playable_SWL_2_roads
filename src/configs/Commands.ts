@@ -123,6 +123,8 @@ export const buyJoyCommand = (price: number) => {
 };
 
 export const onBuyButtonClickedCommand = (buttonType: ButtonType, price: number): void => {
+    lego.command.guard(hintModelGuard).execute(restartHintCommand);
+
     if (!hasEnoughMoneyGuard(price)) {
         lego.command
             .payload(AdStatus.Cta)
