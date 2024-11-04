@@ -13,6 +13,7 @@ export class BackgroundView extends PixiGrid {
         super();
 
         lego.event.on(AdModelEvents.StatusUpdate, this.onStatusUpdate, this);
+        this.buildBkg('bkg/grass');
     }
 
     public getGridConfig(): ICellConfig {
@@ -26,7 +27,6 @@ export class BackgroundView extends PixiGrid {
     private onStatusUpdate(status: AdStatus): void {
         switch (status) {
             case AdStatus.Game:
-                // this.buildBkg('game/bkg');
                 break;
             default:
         }

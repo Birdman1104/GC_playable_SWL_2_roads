@@ -2,6 +2,9 @@
 
 export const assets = {
     images: {
+        'bkg/grass.jpg': require('../assets/images/bkg/grass.jpg').default,
+        'bkg/road.png': require('../assets/images/bkg/road.png').default,
+        'bkg/tree.png': require('../assets/images/bkg/tree.png').default,
         'cars-north-east/bus.png': require('../assets/images/cars-north-east/bus.png').default,
         'cars-north-east/car-1.png': require('../assets/images/cars-north-east/car-1.png').default,
         'cars-north-east/car-2.png': require('../assets/images/cars-north-east/car-2.png').default,
@@ -40,7 +43,6 @@ export const assets = {
         'game/8.png': require('../assets/images/game/8.png').default,
         'game/9.png': require('../assets/images/game/9.png').default,
         'game/alley_fountain.png': require('../assets/images/game/alley_fountain.png').default,
-        'game/bkg.jpg': require('../assets/images/game/bkg.jpg').default,
         'game/build_a_house.png': require('../assets/images/game/build_a_house.png').default,
         'game/burger_small.png': require('../assets/images/game/burger_small.png').default,
         'game/buy_cafe.png': require('../assets/images/game/buy_cafe.png').default,
@@ -76,6 +78,9 @@ export const assets = {
 };
 
 export const Images = {
+    'bkg/grass': 'bkg/grass.jpg',
+    'bkg/road': 'bkg/road.png',
+    'bkg/tree': 'bkg/tree.png',
     'cars-north-east/bus': 'cars-north-east/bus.png',
     'cars-north-east/car-1': 'cars-north-east/car-1.png',
     'cars-north-east/car-2': 'cars-north-east/car-2.png',
@@ -114,7 +119,6 @@ export const Images = {
     'game/8': 'game/8.png',
     'game/9': 'game/9.png',
     'game/alley_fountain': 'game/alley_fountain.png',
-    'game/bkg': 'game/bkg.jpg',
     'game/build_a_house': 'game/build_a_house.png',
     'game/burger_small': 'game/burger_small.png',
     'game/buy_cafe': 'game/buy_cafe.png',

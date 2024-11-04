@@ -2,6 +2,7 @@ import { lego } from '@armathai/lego';
 import { Container, Rectangle, Sprite } from 'pixi.js';
 import { Images } from '../assets';
 import { PATHS } from '../configs/Paths';
+import { TREES } from '../configs/TreesConfig';
 import { BoardEvents } from '../events/MainEvents';
 import { AreaModelEvents, BoardModelEvents, GameModelEvents } from '../events/ModelEvents';
 import { AreaModel, BuildingType } from '../models/AreaModel';
@@ -118,14 +119,21 @@ export class BoardView extends Container {
     private buildBkg(): void {
         this.bkg?.destroy();
 
-        this.bkg = makeSprite({ texture: Images['game/bkg'] });
+        this.bkg = makeSprite({ texture: Images['bkg/road'] });
         this.bkg.interactive = true;
-        this.bkg.on('pointerdown', (emit) => {
+        this.bkg.on('pointerdown', () => {
             lego.event.emit(BoardEvents.BkgPointerDown);
         });
         this.bkg.y = 28;
         const scale = 1857 / this.bkg.width;
         this.bkg.scale.set(scale);
         this.addChild(this.bkg);
+
+        TREES.forEach(({ x, y, scale = 1 }) => {
+            const tree = makeSprite({ texture: Images['bkg/tree'] });
+            tree.position.set(x, y);
+            tree.scale.set(scale);
+            this.addChild(tree);
+        });
     }
 }
