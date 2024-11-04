@@ -204,6 +204,12 @@ const processBuyActionsCommand = (price: number, buttonType: ButtonType): void =
                 .execute(buyHouseCommand)
 
                 .guard(boardModelStateGameGuard)
+                .execute(increaseHousePriceCommand)
+
+                .guard(boardModelStateIdleGuard)
+                .execute(increaseHousePriceCommand)
+
+                .guard(boardModelStateFirstSceneGuard)
                 .execute(increaseHousePriceCommand);
             break;
         case ButtonType.Joy:
@@ -264,10 +270,7 @@ export const onBoardStateUpdateCommand = (state: BoardState): void => {
                 .execute(turnOffTutorialModeCommand)
 
                 .guard(hintModelGuard)
-                .execute(hideHintCommand)
-
-                .guard(hintModelGuard)
-                .execute(destroyHintModelCommand);
+                .execute(restartHintCommand);
 
             break;
         case BoardState.Fail:

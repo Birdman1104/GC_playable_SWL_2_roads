@@ -2,12 +2,13 @@ import { lego } from '@armathai/lego';
 import anime from 'animejs';
 import { Container, Point, Sprite } from 'pixi.js';
 import { Images } from '../assets';
-import { HintModelEvents } from '../events/ModelEvents';
+import { BoardModelEvents, HintModelEvents } from '../events/ModelEvents';
 import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
 import { getViewByProperty, makeSprite } from '../utils';
 
 export class HintView extends Container {
+    private boardState: BoardState;
     private hand: Sprite;
     private hintPositions: Point[] = [];
     private currentPoint = 0;
@@ -15,7 +16,9 @@ export class HintView extends Container {
     constructor() {
         super();
 
-        lego.event.on(HintModelEvents.VisibleUpdate, this.onHintVisibleUpdate, this);
+        lego.event
+            .on(HintModelEvents.VisibleUpdate, this.onHintVisibleUpdate, this)
+            .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this);
 
         this.build();
         this.hide();
@@ -28,12 +31,19 @@ export class HintView extends Container {
     public destroy(): void {
         this.removeTweens();
         lego.event.off(HintModelEvents.VisibleUpdate, this.onHintVisibleUpdate, this);
+        lego.event.off(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this);
 
         super.destroy();
     }
 
     private onHintVisibleUpdate(visible: boolean): void {
         visible ? this.show() : this.hide();
+    }
+
+    private onBoardStateUpdate(newState: BoardState): void {
+        console.warn(this.boardState);
+
+        this.boardState = newState;
     }
 
     private build(): void {
@@ -101,9 +111,17 @@ export class HintView extends Container {
     }
 
     private getHintPosition(): Point[] {
-        return Head.gameModel?.board?.state === BoardState.FirstScene
-            ? this.getHouseButtonPosition()
-            : this.getOtherButtonsPosition();
+        const state = Head.gameModel?.board?.state;
+
+        if (state === BoardState.FirstScene) {
+            return this.getHouseButtonPosition();
+        } else if (state === BoardState.SecondScene) {
+            return this.getOtherButtonsPosition();
+        } else if (state === BoardState.Game) {
+            return this.getActiveButtonsPosition();
+        } else {
+            return [];
+        }
     }
 
     private getHouseButtonPosition() {
@@ -114,5 +132,10 @@ export class HintView extends Container {
     private getOtherButtonsPosition() {
         const bottomBar = getViewByProperty('viewName', 'BottomBar');
         return bottomBar.getOtherButtonsHintPositions();
+    }
+
+    private getActiveButtonsPosition() {
+        const bottomBar = getViewByProperty('viewName', 'BottomBar');
+        return bottomBar.getActiveButtonsHintPositions();
     }
 }
