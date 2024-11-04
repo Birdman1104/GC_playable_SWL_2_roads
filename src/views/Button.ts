@@ -1,5 +1,5 @@
 import { lego } from '@armathai/lego';
-import { Container } from 'pixi.js';
+import { Container, Text } from 'pixi.js';
 import { Images } from '../assets';
 import { BottomBarEvents } from '../events/MainEvents';
 import { ButtonModel, ButtonType } from '../models/ButtonModel';
@@ -10,6 +10,7 @@ const SCALE = 0.5;
 export class Button extends Container {
     private _type: ButtonType;
     private _price: number;
+    private priceText: Text;
     private _isActive: boolean;
 
     constructor(private config: ButtonModel) {
@@ -27,6 +28,10 @@ export class Button extends Container {
             lego.event.emit(BottomBarEvents.ButtonClicked, this._type, this._price);
         });
         this.addChild(sprite);
+
+        this.priceText = new Text(`${this._price}`, { fill: 0x665d5a, fontSize: 36, fontFamily: 'MyCustomFont' });
+        this.priceText.position.set(-8, 50);
+        this.addChild(this.priceText);
     }
 
     get uuid(): string {

@@ -76,7 +76,7 @@ export class ProgressBar extends Container {
         this.icon = makeSprite({ texture: this.getIconTexture(), anchor: new Point(0.5) });
         this.icon.position.set(-80, -25);
 
-        this.valueText = new Text('1000', { fontSize: 28, fill: 0xffffff });
+        this.valueText = new Text('1000', { fontSize: 28, fill: 0xffffff, fontFamily: 'MyCustomFont' });
         this.valueText.anchor.set(0.5);
         this.valueText.position.set(25, 18);
 

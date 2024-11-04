@@ -11,11 +11,10 @@ export const PRICES = {
     house: 100,
 };
 
-export const BAR_MAX = 5
+export const BAR_MAX = 5;
 
 export const HOUSE_COINS_PER_SECOND = 5;
 
 export const GENERATED_TEXTURES: any = {};
 
-
-export const TEXT_COLOR = [0xFFCCCC, 0xFF0000, 0xFF9999,  0x000000]
+export const TEXT_COLOR = [0xffcccc, 0xff0000, 0xff9999, 0x000000];

@@ -23,7 +23,7 @@ export class CoinsBar extends Container {
         this.icon = makeSprite({ texture: Images['game/coin_icon'], anchor: new Point(0.5) });
         this.icon.position.set(-50, -25);
 
-        this.coinsText = new Text('1000', { fontSize: 28, fill: 0xffffff });
+        this.coinsText = new Text('1000', { fontSize: 28, fill: 0xffffff, fontFamily: 'MyCustomFont' });
         this.coinsText.anchor.set(0.5);
         this.coinsText.position.set(43, 20);
         fitText(this.coinsText, 90, 45);
