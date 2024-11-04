@@ -1,25 +1,29 @@
 import { lego } from '@armathai/lego';
 import { Container, Rectangle, Sprite } from 'pixi.js';
 import { Images } from '../assets';
+import { PATHS } from '../configs/Paths';
 import { BoardEvents } from '../events/MainEvents';
 import { AreaModelEvents, BoardModelEvents, GameModelEvents } from '../events/ModelEvents';
 import { AreaModel, BuildingType } from '../models/AreaModel';
 import { GameState } from '../models/GameModel';
 import { delayRunnable, isNarrowScreen, isSquareLikeScreen, lp, makeSprite } from '../utils';
 import { Area } from './Area';
+import { CarPath } from './CarPath';
 
 const BOUNDS = {
     landscape: { x: -400, y: -450, width: 800, height: 800 },
     portrait: { x: -550, y: -400, width: 1000, height: 600 },
 
-    portraitSquare: { x: -550, y: -400, width: 1000, height: 700 },
     landscapeSquare: { x: -450, y: -450, width: 800, height: 900 },
+    portraitSquare: { x: -550, y: -400, width: 1000, height: 700 },
 
     portraitNarrow: { x: -550, y: -400, width: 1000, height: 700 },
     landscapeNarrow: { x: -400, y: -380, width: 800, height: 700 },
 };
+
 export class BoardView extends Container {
     private bkg: Sprite;
+    private carPaths: CarPath[] = [];
     private areas: Area[] = [];
 
     constructor() {
@@ -32,6 +36,15 @@ export class BoardView extends Container {
             .on(BoardModelEvents.CoinsUpdate, this.onCoinsUpdate, this);
 
         this.build();
+
+        this.carPaths = PATHS.map((path, i) => {
+            console.warn(i);
+
+            const carPath = new CarPath(path);
+            carPath.move();
+            this.addChild(carPath);
+            return carPath;
+        });
     }
 
     get viewName() {
@@ -46,7 +59,7 @@ export class BoardView extends Container {
         return this.areas.find((area) => area.uuid === uuid);
     }
 
-    public getBounds(skipUpdate?: boolean | undefined, rect?: Rectangle | undefined): Rectangle {
+    public getBounds(): Rectangle {
         let bounds = BOUNDS.landscape;
         if (isSquareLikeScreen()) {
             bounds = lp(BOUNDS.landscapeSquare, BOUNDS.portraitSquare);
@@ -61,7 +74,7 @@ export class BoardView extends Container {
     }
 
     public rebuild(): void {
-        //
+        // drawPoint(this, 0, 0);
     }
 
     private build(): void {
@@ -87,7 +100,7 @@ export class BoardView extends Container {
     private onAreaBuildingUpdate(newBuilding: BuildingType, oldBuilding: BuildingType, uuid): void {
         const area = this.getBuildingByUuid(uuid);
         if (!area) return;
-
+        this.carPaths.forEach((path) => path.move());
         area.addBuilding(newBuilding);
     }
 
@@ -100,7 +113,9 @@ export class BoardView extends Container {
 
         this.bkg = makeSprite({ texture: Images['game/bkg'] });
         this.bkg.interactive = true;
-        this.bkg.on('pointerdown', () => lego.event.emit(BoardEvents.BkgPointerDown));
+        this.bkg.on('pointerdown', (emit) => {
+            lego.event.emit(BoardEvents.BkgPointerDown);
+        });
         this.bkg.y = 28;
         const scale = 1857 / this.bkg.width;
         this.bkg.scale.set(scale);

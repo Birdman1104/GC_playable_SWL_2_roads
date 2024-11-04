@@ -1,5 +1,6 @@
 import anime from 'animejs';
 import { Graphics, Point, Rectangle, Sprite, Text } from 'pixi.js';
+import { PointLike } from '../views/CarPath';
 
 export const lp = (l, p) => {
     const { clientWidth: w, clientHeight: h } = document.body;
@@ -225,3 +226,5 @@ export const sample = (arr: any[]): any => {
 export const difference = (arrA: any[], arrB: any[]): any[] => {
     return arrA.filter((x) => !arrB.includes(x));
 };
+
+export const dist = (a: PointLike, b: PointLike): number => Math.hypot(b.x - a.x, b.y - a.y);
