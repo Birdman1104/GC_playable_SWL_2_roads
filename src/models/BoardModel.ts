@@ -16,16 +16,17 @@ export enum BoardState {
     Win = 'win',
 }
 
-const INITIAL_COINS = 10000;
-const INITIAL_HEALTH = 500;
-const INITIAL_FOOD = 200;
-const INITIAL_JOY = 300;
-
 // TODO - bring back values
-// const INITIAL_COINS = 1000;
-// const INITIAL_HEALTH = 5;
-// const INITIAL_FOOD = 2;
-// const INITIAL_JOY = 3;
+const INITIAL_COINS = 1000;
+const INITIAL_HEALTH = 5;
+const INITIAL_FOOD = 2;
+const INITIAL_JOY = 3;
+
+const COEFFICIENT = {
+    [BuildingType.Food]: 1.2,
+    [BuildingType.WinterFountain]: 1.3,
+    [BuildingType.Hospital]: 1.5,
+};
 export class BoardModel extends ObservableModel {
     private _coins: number;
     private _health: number;
@@ -40,6 +41,16 @@ export class BoardModel extends ObservableModel {
         super('BoardModel');
 
         this.makeObservable();
+    }
+
+    public get coefficient(): number {
+        let result = 1;
+        this.areas.forEach((a) => {
+            if (a.building) {
+                result *= COEFFICIENT[a.building] || 1;
+            }
+        });
+        return result;
     }
 
     public get state(): BoardState {
@@ -257,7 +268,8 @@ export class BoardModel extends ObservableModel {
     private collectCoins(): void {
         const housesCount = this.areas.filter((a) => a.building === BuildingType.House).length;
         if (!housesCount) return;
-        this.addCoins(housesCount * HOUSE_COINS_PER_SECOND);
+
+        this.addCoins(housesCount * HOUSE_COINS_PER_SECOND * this.coefficient);
 
         this.startMoneyGenerationLoop();
     }
@@ -273,5 +285,7 @@ const getAreaType = (building: BuildingType): AreaType => {
         case BuildingType.FortuneWheel:
         case BuildingType.Hospital:
             return AreaType.Rectangle;
+        default:
+            return AreaType.Square;
     }
 };

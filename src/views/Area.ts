@@ -92,6 +92,9 @@ export class Area extends Container {
 
         this._buildingType = buildingType;
         this.building = makeSprite(getBuildingImgConfig(buildingType));
+        if (this.buildingType === BuildingType.Hospital) {
+            this.building.position.set(10, -10);
+        }
         this.building.scale.set(0);
         this.particlesContainer.position.set(0, 40);
         anime({

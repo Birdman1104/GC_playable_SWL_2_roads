@@ -13,7 +13,7 @@ export class CarPath extends Container {
     constructor(private points: PointLike[]) {
         super();
 
-        // this.points.forEach((p, i) => {
+        // this.points.forEach((p) => {
         //     drawPoint(this, p.x, p.y, 10, 0xff0000);
         // });
     }

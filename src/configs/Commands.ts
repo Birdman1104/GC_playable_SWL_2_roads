@@ -203,6 +203,7 @@ const processBuyActionsCommand = (price: number, buttonType: ButtonType): void =
                 .guard(boardModelStateGameGuard)
                 .execute(buyHouseCommand)
 
+                .guard(boardModelStateGameGuard)
                 .execute(increaseHousePriceCommand);
             break;
         case ButtonType.Joy:

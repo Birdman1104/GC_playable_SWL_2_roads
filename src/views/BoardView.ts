@@ -65,6 +65,7 @@ export class BoardView extends Container {
 
     private build(): void {
         this.buildBkg();
+        this.buildCarPaths();
     }
 
     private onAreasUpdate(areas: AreaModel[]): void {
@@ -77,8 +78,6 @@ export class BoardView extends Container {
             this.addChild(area);
             return area;
         });
-
-        this.buildCarPaths();
     }
 
     private buildCarPaths(): void {
@@ -92,8 +91,6 @@ export class BoardView extends Container {
     private onAreaBuildingUpdate(newBuilding: BuildingType, oldBuilding: BuildingType, uuid): void {
         const area = this.getBuildingByUuid(uuid);
         if (!area) return;
-        this.removeChild(area);
-        this.addChild(area);
         area.addBuilding(newBuilding);
 
         this.moveCar();
