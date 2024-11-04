@@ -72,6 +72,8 @@ const destroySoundModelCommand = (): void => Head.ad?.destroySoundModel();
 const destroyHintModelCommand = (): void => Head.ad?.destroyHintModel();
 const setAdStatusCommand = (status: AdStatus): void => Head.ad?.setAdStatus(status);
 
+const increaseHousePriceCommand = (): void => Head.gameModel?.board?.increaseHousePrice();
+
 export const buyFoodCommand = (price: number) => {
     lego.command
         //
@@ -199,7 +201,9 @@ const processBuyActionsCommand = (price: number, buttonType: ButtonType): void =
 
                 .payload(price)
                 .guard(boardModelStateGameGuard)
-                .execute(buyHouseCommand);
+                .execute(buyHouseCommand)
+
+                .execute(increaseHousePriceCommand);
             break;
         case ButtonType.Joy:
             lego.command

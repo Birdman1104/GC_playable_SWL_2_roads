@@ -42,6 +42,11 @@ export class Button extends Container {
         return this._type;
     }
 
+    public updatePrice(newPrice: number): void {
+        this._price = newPrice;
+        this.priceText.text = `${this._price}`;
+    }
+
     public activate(): void {
         this._isActive = true;
         this.alpha = 1;

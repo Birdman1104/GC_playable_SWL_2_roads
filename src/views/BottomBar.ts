@@ -13,6 +13,7 @@ export class BottomBar extends Container {
 
         lego.event
             .on(BoardModelEvents.ButtonsUpdate, this.onButtonsUpdate, this)
+            .on(ButtonModelEvents.PriceUpdate, this.onButtonPriceUpdate, this)
             .on(ButtonModelEvents.IsActiveUpdate, this.onButtonActiveUpdate, this);
         this.build();
     }
@@ -52,5 +53,12 @@ export class BottomBar extends Container {
         if (!button) return;
 
         isActive ? button.activate() : button.deactivate();
+    }
+
+    private onButtonPriceUpdate(newPrice: number, oldPrice: number, uuid: string): void {
+        const button = this.buttons.find((b) => b.uuid === uuid);
+        if (!button) return;
+
+        button.updatePrice(newPrice);
     }
 }

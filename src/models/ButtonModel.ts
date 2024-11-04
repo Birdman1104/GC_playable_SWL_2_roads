@@ -33,11 +33,19 @@ export class ButtonModel extends ObservableModel {
         return this._price;
     }
 
+    set price(value: number) {
+        this._price = value;
+    }
+
     get isActive(): boolean {
         return this._isActive;
     }
 
     set isActive(value: boolean) {
         this._isActive = value;
+    }
+
+    public increasePrice(diff: number): void {
+        this._price += diff;
     }
 }

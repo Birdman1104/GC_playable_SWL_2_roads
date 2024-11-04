@@ -113,6 +113,10 @@ export class BoardModel extends ObservableModel {
         this.state = state;
     }
 
+    public increaseHousePrice(): void {
+        this._buttons.find((b) => b.type === ButtonType.House)?.increasePrice(500);
+    }
+
     public disableNonHouseButtons(): void {
         this.buttons.forEach((b) => (b.isActive = b.type === ButtonType.House));
     }

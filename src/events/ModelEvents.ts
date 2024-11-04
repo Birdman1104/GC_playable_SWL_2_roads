@@ -17,7 +17,11 @@ export const BoardModelEvents = {
     ButtonsUpdate: 'BoardModelButtonsUpdate',
 };
 
-export const ButtonModelEvents = { TypeUpdate: 'ButtonModelTypeUpdate', IsActiveUpdate: 'ButtonModelIsActiveUpdate' };
+export const ButtonModelEvents = {
+    TypeUpdate: 'ButtonModelTypeUpdate',
+    PriceUpdate: 'ButtonModelPriceUpdate',
+    IsActiveUpdate: 'ButtonModelIsActiveUpdate',
+};
 
 export const CtaModelEvents = { VisibleUpdate: 'CtaModelVisibleUpdate' };
 
