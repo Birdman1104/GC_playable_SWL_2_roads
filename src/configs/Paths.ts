@@ -28,12 +28,12 @@ export const RELEASE_ORDER = [
         delay: 10,
     },
     {
-        pathIndex: 3,
-        delay: 11,
-    },
-    {
         pathIndex: 0,
         delay: 12,
+    },
+    {
+        pathIndex: 3,
+        delay: 14,
     },
 ];
 
