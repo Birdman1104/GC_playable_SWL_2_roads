@@ -8,6 +8,7 @@ module.exports = () => {
     const compression = {
         'assets/images/**/*.jpg': 100,
         'assets/images/**/*.png': [80, 90],
+        'assets/images/bkg/*.png': [90, 100],
     };
     const paths = Object.keys(compression);
     let map = paths.map((p) => {
