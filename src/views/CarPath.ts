@@ -1,15 +1,12 @@
 import anime from 'animejs';
-import { Container, Sprite } from 'pixi.js';
+import { Container } from 'pixi.js';
 import { getDirection } from '../configs/CarsDirections';
-import { delayRunnable, dist } from '../utils';
+import { callIfExists, dist } from '../utils';
 import { Car } from './Car';
 
 export type PointLike = { x: number; y: number };
 
 export class CarPath extends Container {
-    private car: Sprite;
-    private canAddNewCar = true;
-
     constructor(private points: PointLike[]) {
         super();
 
@@ -18,15 +15,8 @@ export class CarPath extends Container {
         // });
     }
 
-    public move(): void {
-        if (!this.canAddNewCar) return;
-
-        this.canAddNewCar = false;
-        delayRunnable(2, () => {
-            this.canAddNewCar = true;
-        });
+    public move(cb?): void {
         const car = this.getCar();
-        // this.points = Math.random() > 0.5 ? this.points : this.points.reverse();
         let i = 1;
 
         const move = (i) => {
@@ -45,6 +35,7 @@ export class CarPath extends Container {
                         move(i);
                     } else if (i === this.points.length) {
                         car.destroy();
+                        callIfExists(cb);
                     }
                 },
             });
@@ -70,6 +61,6 @@ export class CarPath extends Container {
 
     private getCarSpeed(i: number): number {
         const distance = dist(this.points[i - 1], this.points[i]);
-        return distance * (Math.random() + 3);
+        return distance * 5;
     }
 }

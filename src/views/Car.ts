@@ -23,7 +23,7 @@ export class Car extends Container {
     private build(): void {
         this.car = makeSprite({ texture: Images[`cars-${this._direction}/${this._type}`] });
         this.car.anchor.set(0.5);
-        this.car.scale.set(this._type === 'bus' ? 0.3 : 0.4);
+        this.car.scale.set(this._type === 'bus' ? 0.2 : 0.25);
         this.addChild(this.car);
     }
 }

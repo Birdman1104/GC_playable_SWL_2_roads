@@ -1,12 +1,12 @@
 import { lego } from '@armathai/lego';
 import { Container, Rectangle, Sprite } from 'pixi.js';
 import { Images } from '../assets';
-import { PATHS } from '../configs/Paths';
+import { PATHS, RELEASE_ORDER } from '../configs/Paths';
 import { TREES } from '../configs/TreesConfig';
 import { BoardEvents } from '../events/MainEvents';
 import { AreaModelEvents, BoardModelEvents } from '../events/ModelEvents';
 import { AreaModel, BuildingType } from '../models/AreaModel';
-import { delayRunnable, isNarrowScreen, isSquareLikeScreen, lp, makeSprite, sample } from '../utils';
+import { delayRunnable, isNarrowScreen, isSquareLikeScreen, lp, makeSprite } from '../utils';
 import { Area } from './Area';
 import { CarPath } from './CarPath';
 
@@ -71,11 +71,16 @@ export class BoardView extends Container {
         this.buildBkg();
         this.buildCarPaths();
 
-        this.moveCar();
+        this.moveCars();
     }
 
-    private releaseCar(): void {
-        delayRunnable(CAR_INTERVAL, () => this.moveCar());
+    private moveCars(): void {
+        RELEASE_ORDER.forEach((order, i) => {
+            delayRunnable(order.delay, () => {
+                const road = this.carPaths[order.pathIndex];
+                road.move(i === RELEASE_ORDER.length - 1 ? () => this.moveCars() : null);
+            });
+        });
     }
 
     private onAreasUpdate(areas: AreaModel[]): void {
@@ -102,13 +107,6 @@ export class BoardView extends Container {
         const area = this.getBuildingByUuid(uuid);
         if (!area) return;
         area.addBuilding(newBuilding);
-    }
-
-    private moveCar(): void {
-        const road = sample(this.carPaths);
-        road.move();
-
-        this.releaseCar();
     }
 
     private onCoinsUpdate(): void {

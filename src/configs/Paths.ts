@@ -2,6 +2,41 @@ import { PointLike } from '../views/CarPath';
 
 export type Path = PointLike[];
 
+export const RELEASE_ORDER = [
+    {
+        pathIndex: 0,
+        delay: 0,
+    },
+    {
+        pathIndex: 0,
+        delay: 2,
+    },
+    {
+        pathIndex: 2,
+        delay: 2,
+    },
+    {
+        pathIndex: 2,
+        delay: 3,
+    },
+    {
+        pathIndex: 3,
+        delay: 4,
+    },
+    {
+        pathIndex: 1,
+        delay: 10,
+    },
+    {
+        pathIndex: 3,
+        delay: 11,
+    },
+    {
+        pathIndex: 0,
+        delay: 12,
+    },
+];
+
 export const PATHS = Object.freeze([
     [
         {
@@ -23,26 +58,26 @@ export const PATHS = Object.freeze([
             y: 30,
         },
         {
-            x: 165,
-            y: -45,
+            x: 170,
+            y: -40,
         },
         {
-            x: 305,
+            x: 315,
             y: 40,
         },
         {
-            x: 930,
+            x: 940,
             y: -280,
         },
     ],
     [
         {
-            x: 930,
+            x: 950,
             y: -280,
         },
         {
-            x: 305,
-            y: 40,
+            x: 315,
+            y: 35,
         },
         {
             x: -115,
@@ -53,7 +88,7 @@ export const PATHS = Object.freeze([
             y: 0,
         },
         {
-            x: -580,
+            x: -570,
             y: -60,
         },
         {
@@ -67,8 +102,8 @@ export const PATHS = Object.freeze([
             y: 130,
         },
         {
-            x: -460,
-            y: -100,
+            x: -445,
+            y: -105,
         },
         {
             x: -60,
@@ -79,11 +114,11 @@ export const PATHS = Object.freeze([
             y: -30,
         },
         {
-            x: 305,
-            y: 40,
+            x: 315,
+            y: 35,
         },
         {
-            x: 930,
+            x: 940,
             y: -280,
         },
     ],
