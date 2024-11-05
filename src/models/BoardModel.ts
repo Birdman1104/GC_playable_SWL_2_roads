@@ -223,7 +223,7 @@ export class BoardModel extends ObservableModel {
     }
 
     public startMoneyGenerationLoop(): void {
-        if (this.state === BoardState.Game || this.state === BoardState.SecondScene) {
+        if (this.state === BoardState.Game || this.state === BoardState.SecondScene || this.state === BoardState.Win) {
             delayRunnable(GAME_CONFIG.MoneyGenerationInterval, () => this.collectCoins());
         }
     }
@@ -250,22 +250,24 @@ export class BoardModel extends ObservableModel {
     }
 
     private checkButtonsActive(): void {
-        if (this.state !== BoardState.Game) return;
-        for (let i = 0; i < this.buttons.length; i++) {
-            const b = this.buttons[i];
-            b.isActive = b.price <= this._coins;
-            if (!b.isActive) continue;
-            if (b.type === ButtonType.House || b.type === ButtonType.Joy) {
-                const emptyAreas = this.areas.filter((a) => !a.building && a.type === AreaType.Square);
-                b.isActive = emptyAreas.length > 0;
-            } else if (b.type === ButtonType.Food || b.type === ButtonType.Health) {
-                const emptyAreas = this.areas.filter((a) => !a.building && a.type === AreaType.Rectangle);
-                b.isActive = emptyAreas.length > 0;
+        if (this.state === BoardState.Game || this.state === BoardState.Win) {
+            for (let i = 0; i < this.buttons.length; i++) {
+                const b = this.buttons[i];
+                b.isActive = b.price <= this._coins;
+                if (!b.isActive) continue;
+                if (b.type === ButtonType.House || b.type === ButtonType.Joy) {
+                    const emptyAreas = this.areas.filter((a) => !a.building && a.type === AreaType.Square);
+                    b.isActive = emptyAreas.length > 0;
+                } else if (b.type === ButtonType.Food || b.type === ButtonType.Health) {
+                    const emptyAreas = this.areas.filter((a) => !a.building && a.type === AreaType.Rectangle);
+                    b.isActive = emptyAreas.length > 0;
+                }
             }
         }
     }
 
     private collectCoins(): void {
+        if (this.coins > 15000) return;
         const housesCount = this.areas.filter((a) => a.building === BuildingType.House).length;
         if (!housesCount) return;
 

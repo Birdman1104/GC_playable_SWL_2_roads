@@ -28,8 +28,6 @@ export class BoardView extends Container {
     private carPaths: CarPath[] = [];
     private areas: Area[] = [];
 
-    private carsInterval = 0;
-
     constructor() {
         super();
 
@@ -109,7 +107,8 @@ export class BoardView extends Container {
         area.addBuilding(newBuilding);
     }
 
-    private onCoinsUpdate(): void {
+    private onCoinsUpdate(newValue: number, oldValue: number): void {
+        if (newValue < oldValue) return;
         this.houseAreas.forEach((area) => area.playCoinsAnimation());
     }
 
