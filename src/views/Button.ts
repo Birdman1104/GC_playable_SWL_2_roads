@@ -5,8 +5,6 @@ import { BottomBarEvents } from '../events/MainEvents';
 import { ButtonModel, ButtonType } from '../models/ButtonModel';
 import { makeSprite } from '../utils';
 
-const SCALE = 0.5;
-
 export class Button extends Container {
     private _type: ButtonType;
     private _price: number;
@@ -22,7 +20,6 @@ export class Button extends Container {
 
         const sprite = makeSprite(getSpriteConfig(this._type));
         sprite.interactive = true;
-        this.scale.set(SCALE);
 
         sprite.on('pointerdown', () => {
             lego.event.emit(BottomBarEvents.ButtonClicked, this._type, this._price);

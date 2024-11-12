@@ -37,6 +37,7 @@ const getForegroundGridLandscapeConfig = () => {
                 name: 'sound',
                 align: CellAlign.leftBottom,
                 bounds: { x: 0, y: 0.9, width: 0.1, height: 0.1 },
+                offset: { x: 10, y: -10 },
             },
         ],
     };
@@ -73,7 +74,8 @@ const getForegroundGridPortraitConfig = () => {
             {
                 name: 'sound',
                 align: CellAlign.leftBottom,
-                bounds: { x: 0, y: 0.9, width: 0.1, height: 0.1 },
+                bounds: { x: 0, y: 0.925, width: 0.075, height: 0.075 },
+                offset: { x: 10, y: -10 },
             },
         ],
     };

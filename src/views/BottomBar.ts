@@ -1,10 +1,9 @@
 import { lego } from '@armathai/lego';
-import { Container, Point } from 'pixi.js';
+import { Container, Point, Rectangle } from 'pixi.js';
 import { BoardModelEvents, ButtonModelEvents } from '../events/ModelEvents';
 import { ButtonModel, ButtonType } from '../models/ButtonModel';
 import { Button } from './Button';
 
-const OFFSET = 80;
 export class BottomBar extends Container {
     private buttons: Button[] = [];
 
@@ -20,6 +19,10 @@ export class BottomBar extends Container {
 
     get viewName() {
         return 'BottomBar';
+    }
+
+    public getBounds(): Rectangle {
+        return new Rectangle(-10, 0, 840, 220);
     }
 
     public getOtherButtonsHintPositions(): Point[] {
@@ -46,7 +49,7 @@ export class BottomBar extends Container {
     private onButtonsUpdate(buttons: ButtonModel[]): void {
         this.buttons = buttons.map((c, i) => {
             const button = new Button(c);
-            button.position.set(button.width * 1.2 * i + OFFSET, 0);
+            button.position.set(button.width / 2 + button.width * i * 1.2, button.height / 2);
             this.addChild(button);
             return button;
         });

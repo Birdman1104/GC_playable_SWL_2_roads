@@ -1,4 +1,4 @@
-import { lp } from '../../utils';
+import { isSquareLikeScreen, lp } from '../../utils';
 
 export const getUIGridConfig = () => {
     return lp(getUIGridLandscapeConfig, getUIGridPortraitConfig).call(null);
@@ -6,6 +6,9 @@ export const getUIGridConfig = () => {
 
 const getUIGridLandscapeConfig = () => {
     const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
+    const bottomBarBounds = isSquareLikeScreen()
+        ? { x: 0, y: 0.7, width: 1, height: 0.225 }
+        : { x: 0, y: 0.725, width: 1, height: 0.275 };
     return {
         name: 'ui',
         // debug: { color: 0xd950ff },
@@ -14,7 +17,7 @@ const getUIGridLandscapeConfig = () => {
             {
                 name: 'bottomBar',
                 // scale: CellScale.showAll,
-                bounds: { x: 0, y: 0.79, width: 1, height: 0.2 },
+                bounds: bottomBarBounds,
             },
             {
                 name: 'topBar',
