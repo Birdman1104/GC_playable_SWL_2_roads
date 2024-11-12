@@ -2,6 +2,7 @@ import { lego } from '@armathai/lego';
 import { Howl } from 'howler';
 import { BoardEvents, BottomBarEvents, SoundEvents } from './events/MainEvents';
 import { AreaModelEvents, BoardModelEvents } from './events/ModelEvents';
+import { BuildingType } from './models/AreaModel';
 import { BoardState } from './models/BoardModel';
 import { ATTENTION } from './sounds/attention';
 import { BUILD } from './sounds/build';
@@ -10,7 +11,6 @@ import { COINS_DECREASE } from './sounds/coinsDecrease';
 import { THEME } from './sounds/theme';
 import { delayRunnable } from './utils';
 
-let i = 0;
 class SoundControl {
     private sounds: any;
     private isMutedFromIcon = false;
@@ -56,11 +56,15 @@ class SoundControl {
         }
     }
 
-    private onAreaBuildingUpdate(): void {
-        if (i >= 6) {
+    private onAreaBuildingUpdate(buildingType: BuildingType): void {
+        if (
+            buildingType === BuildingType.Food ||
+            buildingType === BuildingType.Hospital ||
+            buildingType === BuildingType.WinterFountain ||
+            buildingType === BuildingType.House
+        ) {
             this.playBuild();
         }
-        i++;
     }
 
     private onBoardStateUpdate(state: BoardState): void {

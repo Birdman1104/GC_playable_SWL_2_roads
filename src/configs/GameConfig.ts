@@ -3,7 +3,8 @@ export const GAME_CONFIG = Object.freeze({
     Hint: true,
     Sound: true,
 
-    MoneyGenerationInterval: 2, // Seconds
+    MoneyGenerationInterval: 1.5, // Seconds
+    HouseCoinsGeneration: 50,
 
     // Параметры для разных версий
     //

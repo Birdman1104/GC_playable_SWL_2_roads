@@ -1,7 +1,6 @@
 import { AREAS } from '../configs/AreasConfig';
 import { BUTTONS_CONFIG } from '../configs/ButtonsConfig';
 import { GAME_CONFIG } from '../configs/GameConfig';
-import { HOUSE_COINS_PER_SECOND } from '../configs/constants';
 import { delayRunnable } from '../utils';
 import { AreaModel, AreaType, BuildingType } from './AreaModel';
 import { ButtonModel, ButtonType } from './ButtonModel';
@@ -23,9 +22,9 @@ const INITIAL_FOOD = 2;
 const INITIAL_JOY = 3;
 
 const COEFFICIENT = {
-    [BuildingType.Food]: 1.2,
-    [BuildingType.WinterFountain]: 1.3,
-    [BuildingType.Hospital]: 1.5,
+    [BuildingType.Food]: 2,
+    [BuildingType.WinterFountain]: 1.8,
+    [BuildingType.Hospital]: 2.5,
 };
 export class BoardModel extends ObservableModel {
     private _coins: number;
@@ -271,7 +270,7 @@ export class BoardModel extends ObservableModel {
         const housesCount = this.areas.filter((a) => a.building === BuildingType.House).length;
         if (!housesCount) return;
 
-        this.addCoins(housesCount * HOUSE_COINS_PER_SECOND * this.coefficient);
+        this.addCoins(housesCount * GAME_CONFIG.HouseCoinsGeneration * this.coefficient);
 
         this.startMoneyGenerationLoop();
     }
