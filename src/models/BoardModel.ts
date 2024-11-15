@@ -113,9 +113,9 @@ export class BoardModel extends ObservableModel {
         return freeAreas.length === 0 ? undefined : freeAreas[rnd];
     }
 
-    public isLastFreeArea(): boolean {
+    public isBuildingCountReached(): boolean {
         const freeAreas = this.areas.filter((area) => !area.building);
-        return freeAreas.length === 1;
+        return freeAreas.length === 3;
     }
 
     public setState(state: BoardState): void {

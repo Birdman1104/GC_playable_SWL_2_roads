@@ -17,7 +17,7 @@ import {
     hasEnoughMoneyGuard,
     hintModelGuard,
     hintParamGuard,
-    isLastBuildingGuard,
+    isBuildingCountReachedGuard,
     soundParamGuard,
 } from './Guards';
 
@@ -135,14 +135,14 @@ export const onBuyButtonClickedCommand = (buttonType: ButtonType, price: number)
     }
 
     lego.command
-        .guard(isLastBuildingGuard)
+        .guard(isBuildingCountReachedGuard)
         .execute(takeToStoreCommand)
 
-        .guard(isLastBuildingGuard)
+        .guard(isBuildingCountReachedGuard)
         .payload(AdStatus.Cta)
         .execute(setAdStatusCommand)
 
-        .guard(lego.not(isLastBuildingGuard), hasEnoughMoneyGuard)
+        .guard(lego.not(isBuildingCountReachedGuard), hasEnoughMoneyGuard)
         .payload(price, buttonType)
         .execute(processBuyActionsCommand);
 };

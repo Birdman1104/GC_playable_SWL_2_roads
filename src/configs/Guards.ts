@@ -48,29 +48,29 @@ export const hasEnoughMoneyGuard = (price: number): boolean => {
 };
 
 export const boardModelStateSecondSceneGuard = (): boolean => {
-    return Head.gameModel?.board?.state === BoardState.SecondScene
+    return Head.gameModel?.board?.state === BoardState.SecondScene;
 };
 
 export const boardModelStateFirstSceneGuard = (): boolean => {
-    return Head.gameModel?.board?.state === BoardState.FirstScene
+    return Head.gameModel?.board?.state === BoardState.FirstScene;
 };
 
 export const boardModelStateIdleGuard = (): boolean => {
-    return Head.gameModel?.board?.state === BoardState.Idle
+    return Head.gameModel?.board?.state === BoardState.Idle;
 };
 
 export const boardModelStateGameGuard = (): boolean => {
-    return Head.gameModel?.board?.state === BoardState.Game
+    return Head.gameModel?.board?.state === BoardState.Game;
 };
 
 export const hasEmptySquareArea = (): boolean => {
-    return !!Head.gameModel?.board?.areas.find(area => !area.building && area.type === AreaType.Square);
+    return !!Head.gameModel?.board?.areas.find((area) => !area.building && area.type === AreaType.Square);
 };
 
 export const hasEmptyRectangleArea = (): boolean => {
-    return !!Head.gameModel?.board?.areas.find(area => !area.building && area.type === AreaType.Rectangle);
+    return !!Head.gameModel?.board?.areas.find((area) => !area.building && area.type === AreaType.Rectangle);
 };
 
-export const isLastBuildingGuard = (): boolean => {
-    return !!Head.gameModel?.board?.isLastFreeArea()
+export const isBuildingCountReachedGuard = (): boolean => {
+    return !!Head.gameModel?.board?.isBuildingCountReached();
 };
