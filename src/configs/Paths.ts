@@ -77,7 +77,7 @@ export const PATHS = Object.freeze([
         },
         {
             x: 315,
-            y: 35,
+            y: 40,
         },
         {
             x: -115,
@@ -115,11 +115,11 @@ export const PATHS = Object.freeze([
         },
         {
             x: 315,
-            y: 35,
+            y: 40,
         },
         {
-            x: 940,
-            y: -280,
+            x: 980,
+            y: -270,
         },
     ],
 ]);
