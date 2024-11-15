@@ -275,12 +275,6 @@ export const onBoardStateUpdateCommand = (state: BoardState): void => {
                 .execute(restartHintCommand);
 
             break;
-        case BoardState.Fail:
-            lego.command
-                //
-                .payload(AdStatus.Cta)
-                .execute(setAdStatusCommand);
-            break;
         default:
             break;
     }

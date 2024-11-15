@@ -11,7 +11,6 @@ export enum BoardState {
     Idle = 'idle', // 'Provide for citizens', other buttons
     SecondScene = 'second_scene', // 'Provide for citizens', other buttons
     Game = 'game',
-    Fail = 'fail',
     Win = 'win',
 }
 
@@ -169,26 +168,16 @@ export class BoardModel extends ObservableModel {
     public decreaseHealth(value: number): void {
         const newValue = this._health - value;
         this._health = Math.max(newValue, 0);
-
-        if (newValue <= 0) {
-            this.state = BoardState.Fail;
-        }
     }
 
     public decreaseFood(value: number): void {
         const newValue = this._food - value;
-        this._food -= value;
-        if (newValue <= 0) {
-            this.state = BoardState.Fail;
-        }
+        this._food = Math.max(newValue, 0);
     }
 
     public decreaseJoy(value: number): void {
         const newValue = this._joy - value;
-        this._joy -= value;
-        if (newValue <= 0) {
-            this.state = BoardState.Fail;
-        }
+        this._joy = Math.max(newValue, 0);
     }
 
     public addBuilding(building: BuildingType): void {
