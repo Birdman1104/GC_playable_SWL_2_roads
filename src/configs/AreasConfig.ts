@@ -18,7 +18,7 @@ export const AREAS: AreaConfig[] = [
         building: BuildingType.FortuneWheel,
     },
     {
-        x: -221,
+        x: -219,
         y: -166,
         type: AreaType.Square,
     },
@@ -74,7 +74,7 @@ export const AREAS: AreaConfig[] = [
     },
     {
         x: 182,
-        y: 35,
+        y: 36,
         type: AreaType.Rectangle,
     },
     {
@@ -84,32 +84,32 @@ export const AREAS: AreaConfig[] = [
     },
     {
         x: 370,
-        y: 123,
+        y: 127,
         type: AreaType.Rectangle,
     },
     {
         x: 70,
-        y: 90,
+        y: 94,
         type: AreaType.Rectangle,
     },
     {
         x: -315,
-        y: 14,
+        y: 16,
         type: AreaType.Rectangle,
     },
     {
         x: -196,
-        y: 70,
+        y: 74,
         type: AreaType.Rectangle,
     },
     {
-        x: -280,
-        y: 150,
+        x: -289,
+        y: 143,
         type: AreaType.Square,
     },
     {
-        x: -403,
-        y: 98,
+        x: -399,
+        y: 91,
         type: AreaType.Rectangle,
     },
 ];

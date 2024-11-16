@@ -15,6 +15,7 @@ export class Area extends Container {
         super();
         this._buildingType = config.building;
         this.build();
+        this.scale.set(0.95);
     }
 
     get uuid() {
