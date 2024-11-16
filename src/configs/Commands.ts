@@ -261,7 +261,9 @@ export const onBoardStateUpdateCommand = (state: BoardState): void => {
             lego.command
                 //
                 .execute(enableNonHouseButtonsCommand)
-                .execute(restartHintCommand)
+
+                .payload(0.3)
+                .execute(startHintVisibilityTimerCommand)
 
                 .execute(startMoneyGeneratorLoopCommand);
             break;
