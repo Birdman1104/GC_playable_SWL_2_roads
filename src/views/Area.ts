@@ -128,15 +128,16 @@ export class Area extends Container {
     }
 
     private addDustAnimation(): void {
+        const dustType = getDustType(this.buildingType);
         const frames: any[] = [];
         for (let i = 1; i <= 9; i++) {
-            frames.push(Images[`game/${i}`]);
+            frames.push(Images[`${dustType}/${i}`]);
         }
 
         const anim = AnimatedSprite.fromFrames(frames);
         anim.anchor.set(0.5);
-        anim.animationSpeed = 0.5;
-        anim.scale.set(0.6);
+        anim.animationSpeed = 0.4;
+        anim.scale.set(1.5);
         anim.loop = false;
 
         anim.play();
@@ -249,4 +250,18 @@ const getBuildingImgConfig = (building: BuildingType): { texture: string; anchor
     }
 
     return { texture, anchor };
+};
+
+const getDustType = (buildingType: BuildingType): string => {
+    switch (buildingType) {
+        case BuildingType.Hospital:
+        case BuildingType.House:
+            return 'dust1';
+        case BuildingType.Food:
+            return 'dust2';
+        case BuildingType.WinterFountain:
+            return 'dust3';
+        default:
+            return 'dust2';
+    }
 };
