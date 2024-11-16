@@ -16,7 +16,6 @@ export class AdModel extends ObservableModel {
     private _hint: HintModel | null = null;
     private _status: AdStatus = AdStatus.Unknown;
 
-
     public constructor() {
         super('AdModel');
 

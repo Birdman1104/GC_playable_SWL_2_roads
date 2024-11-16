@@ -43,7 +43,6 @@ const stopHintVisibilityTimerCommand = (): void => Head.ad?.hint?.stopVisibility
 
 const initializeModelsCommand = (): void => {
     lego.command
-
         .execute(initializeGameModelCommand)
 
         .execute(initializeCtaModelCommand)
@@ -54,8 +53,8 @@ const initializeModelsCommand = (): void => {
         .guard(hintParamGuard)
         .execute(initializeHintModelCommand)
 
-        .guard(hintParamGuard)
-        .execute(startHintVisibilityTimerCommand);
+        .payload(BoardState.FirstScene)
+        .execute(setBoardStateCommand);
 };
 
 const hideHintCommand = (): void => {
@@ -249,7 +248,8 @@ export const onBoardStateUpdateCommand = (state: BoardState): void => {
                 //
                 .execute(disableNonHouseButtonsCommand)
 
-                .execute(restartHintCommand);
+                .payload(0.1)
+                .execute(startHintVisibilityTimerCommand);
             break;
         case BoardState.Idle:
             lego.command
@@ -307,9 +307,7 @@ export const addBuildingCommand = (building: BuildingType): void => {
 export const onAdStatusUpdateCommand = (status: AdStatus): void => {
     switch (status) {
         case AdStatus.Game:
-            lego.command
-                //
-                .execute(initializeModelsCommand);
+            lego.command.execute(initializeModelsCommand);
 
             break;
         case AdStatus.PreCta:

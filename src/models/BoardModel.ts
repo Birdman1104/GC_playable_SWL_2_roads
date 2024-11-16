@@ -233,8 +233,6 @@ export class BoardModel extends ObservableModel {
         this._health = INITIAL_HEALTH;
         this._food = INITIAL_FOOD;
         this._joy = INITIAL_JOY;
-
-        this.state = BoardState.FirstScene;
     }
 
     private checkButtonsActive(): void {

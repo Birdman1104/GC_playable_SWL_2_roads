@@ -27,19 +27,19 @@ export class BottomBar extends Container {
 
     public getOtherButtonsHintPositions(): Point[] {
         const otherButtons = this.buttons.filter((b) => b.type !== ButtonType.House);
-        const hintPositions = otherButtons.map((b) => this.toGlobal(b.position));
+        const hintPositions = otherButtons.map((b) => this.toGlobal(b.hintPosition));
         return hintPositions;
     }
 
     public getActiveButtonsHintPositions(): Point[] {
         const activeButtons = this.buttons.filter((b) => b.isActive);
-        const hintPositions = activeButtons.map((b) => this.toGlobal(b.position));
+        const hintPositions = activeButtons.map((b) => this.toGlobal(b.hintPosition));
         return hintPositions;
     }
 
     public getHouseButtonPosition(): Point[] {
         const housePosition = this.buttons.find((b) => b.type === ButtonType.House);
-        return housePosition ? [this.toGlobal(housePosition.position)] : [];
+        return housePosition ? [this.toGlobal(housePosition.hintPosition)] : [];
     }
 
     private build(): void {

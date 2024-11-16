@@ -1,5 +1,5 @@
 import { lego } from '@armathai/lego';
-import { Container, Text } from 'pixi.js';
+import { Container, Point, Text } from 'pixi.js';
 import { Images } from '../assets';
 import { BottomBarEvents } from '../events/MainEvents';
 import { ButtonModel, ButtonType } from '../models/ButtonModel';
@@ -41,6 +41,10 @@ export class Button extends Container {
 
     get isActive(): boolean {
         return this._isActive;
+    }
+
+    get hintPosition(): Point {
+        return new Point(this.x + 50, this.y + 30);
     }
 
     public updatePrice(newPrice: number): void {

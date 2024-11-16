@@ -1,5 +1,5 @@
 import { CellAlign, CellScale } from '@armathai/pixi-grid';
-import { lp } from '../../utils';
+import { isSquareLikeScreen, lp } from '../../utils';
 
 export const getForegroundGridConfig = () => {
     return lp(getForegroundGridLandscapeConfig, getForegroundGridPortraitConfig).call(null);
@@ -7,14 +7,17 @@ export const getForegroundGridConfig = () => {
 
 const getForegroundGridLandscapeConfig = () => {
     const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
+    const bottomBarBounds = isSquareLikeScreen()
+        ? { x: 0, y: 0.7, width: 1, height: 0.225 }
+        : { x: 0, y: 0.725, width: 1, height: 0.275 };
     return {
         name: 'foreground',
         // debug: { color: 0xff5027 },
         bounds,
         cells: [
             {
-                name: 'cell',
-                bounds: { x: 0, y: 0, width: 1, height: 1 },
+                name: 'bottomBar',
+                bounds: bottomBarBounds,
             },
             {
                 name: 'text_from',
@@ -51,8 +54,8 @@ const getForegroundGridPortraitConfig = () => {
         bounds,
         cells: [
             {
-                name: 'cell',
-                bounds: { x: 0, y: 0, width: 1, height: 1 },
+                name: 'bottomBar',
+                bounds: { x: 0.05, y: 0.74, width: 0.9, height: 0.25 },
             },
             {
                 name: 'text_from',

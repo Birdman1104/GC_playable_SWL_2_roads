@@ -8,13 +8,12 @@ import { AdModelEvents, BoardModelEvents } from '../events/ModelEvents';
 import { AdStatus } from '../models/AdModel';
 import { BoardState } from '../models/BoardModel';
 import { HintModel } from '../models/HintModel';
-import { callIfExists, delayRunnable, makeSprite, tweenToCell } from '../utils';
+import { callIfExists, delayRunnable, makeSprite, removeRunnable, tweenToCell } from '../utils';
+import { BottomBar } from './BottomBar';
 import { HintView } from './HintView';
 import { Sound } from './SoundView';
 
-// TODO - bring back value
 const TEXT_DISPLAY_DURATION = 2;
-// const TEXT_DISPLAY_DURATION = 0.2;
 
 export class ForegroundView extends PixiGrid {
     private sound: Sound;
@@ -22,6 +21,8 @@ export class ForegroundView extends PixiGrid {
     private blocker: Graphics;
     private buildText: Sprite;
     private provideText: Sprite;
+    private bottomBar: BottomBar;
+    private runnable: any;
 
     constructor() {
         super();
@@ -49,6 +50,7 @@ export class ForegroundView extends PixiGrid {
         this.buildBlocker();
         this.buildBuildText();
         this.buildProvideText();
+        this.buildBottomBar();
     }
 
     private buildBlocker(): void {
@@ -107,10 +109,17 @@ export class ForegroundView extends PixiGrid {
             case BoardState.FirstScene:
                 this.showFirstScene();
                 break;
+            case BoardState.Idle:
+                removeRunnable(this.runnable);
+                this.hideBlocker();
+                tweenToCell(this, this.buildText, 'text_to');
+                break;
             case BoardState.SecondScene:
                 this.showSecondScene();
                 break;
             case BoardState.Game:
+                removeRunnable(this.runnable);
+                tweenToCell(this, this.provideText, 'text_to');
                 this.hideBlocker();
                 break;
 
@@ -122,7 +131,7 @@ export class ForegroundView extends PixiGrid {
     private showFirstScene(): void {
         tweenToCell(this, this.buildText, 'text_show');
         const cb = () => {
-            delayRunnable(TEXT_DISPLAY_DURATION, () => {
+            this.runnable = delayRunnable(TEXT_DISPLAY_DURATION, () => {
                 this.hideBlocker();
                 tweenToCell(this, this.buildText, 'text_to');
             });
@@ -134,7 +143,7 @@ export class ForegroundView extends PixiGrid {
     private showSecondScene(): void {
         tweenToCell(this, this.provideText, 'text_show');
         const cb = () => {
-            delayRunnable(TEXT_DISPLAY_DURATION, () => {
+            this.runnable = delayRunnable(TEXT_DISPLAY_DURATION, () => {
                 this.hideBlocker();
                 tweenToCell(this, this.provideText, 'text_to');
             });
@@ -176,5 +185,11 @@ export class ForegroundView extends PixiGrid {
         if (!child) return;
         this.removeContent(child);
         this.setChild(cell, child);
+    }
+
+    private buildBottomBar(): void {
+        this.bottomBar = new BottomBar();
+        this.bottomBar.on('rebuild', this.rebuild, this);
+        this.setChild('bottomBar', this.bottomBar);
     }
 }
