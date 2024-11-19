@@ -11,6 +11,7 @@ import { HintModel } from '../models/HintModel';
 import { callIfExists, delayRunnable, makeSprite, removeRunnable, tweenToCell } from '../utils';
 import { BottomBar } from './BottomBar';
 import { HintView } from './HintView';
+import { PCta } from './PCta';
 import { Sound } from './SoundView';
 
 const TEXT_DISPLAY_DURATION = 2;
@@ -51,6 +52,7 @@ export class ForegroundView extends PixiGrid {
         this.buildBuildText();
         this.buildProvideText();
         this.buildBottomBar();
+        this.buildPCTA();
     }
 
     private buildBlocker(): void {
@@ -191,5 +193,10 @@ export class ForegroundView extends PixiGrid {
         this.bottomBar = new BottomBar();
         this.bottomBar.on('rebuild', this.rebuild, this);
         this.setChild('bottomBar', this.bottomBar);
+    }
+
+    private buildPCTA(): void {
+        const pcta = new PCta();
+        this.setChild('pcta', pcta);
     }
 }

@@ -42,6 +42,12 @@ const getForegroundGridLandscapeConfig = () => {
                 bounds: { x: 0, y: 0.9, width: 0.1, height: 0.1 },
                 offset: { x: 10, y: -10 },
             },
+            {
+                name: 'pcta',
+                // align: CellAlign.leftBottom,
+                bounds: { x: 0.85, y: 0.01, width: 0.15, height: 0.15 },
+                offset: { x: -20, y: 0 },
+            },
         ],
     };
 };
@@ -79,6 +85,11 @@ const getForegroundGridPortraitConfig = () => {
                 align: CellAlign.leftBottom,
                 bounds: { x: 0, y: 0.925, width: 0.075, height: 0.075 },
                 offset: { x: 10, y: -10 },
+            },
+            {
+                name: 'pcta',
+                bounds: { x: 0.7, y: 0, width: 0.3, height: 0.1 },
+                offset: { x: -20, y: 15 },
             },
         ],
     };
