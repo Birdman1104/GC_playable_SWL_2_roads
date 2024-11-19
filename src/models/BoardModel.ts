@@ -115,7 +115,7 @@ export class BoardModel extends ObservableModel {
 
     public isBuildingCountReached(): boolean {
         const freeAreas = this.areas.filter((area) => !area.building);
-        return freeAreas.length === 3;
+        return freeAreas.length === 6;
     }
 
     public setState(state: BoardState): void {
