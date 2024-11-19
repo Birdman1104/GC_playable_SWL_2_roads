@@ -2,7 +2,6 @@ import { ObservableModel } from './ObservableModel';
 
 export enum BuildingType {
     House = 'house',
-    Park = 'park',
     Hospital = 'hospital',
     Food = 'food',
     FortuneWheel = 'fortune_wheel',

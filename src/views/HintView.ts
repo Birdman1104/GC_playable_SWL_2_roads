@@ -5,7 +5,7 @@ import { Images } from '../assets';
 import { HintModelEvents } from '../events/ModelEvents';
 import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
-import { getViewByProperty, makeSprite } from '../utils';
+import { getViewByProperty, lp, makeSprite } from '../utils';
 
 export class HintView extends Container {
     private hand: Sprite;
@@ -58,7 +58,7 @@ export class HintView extends Container {
 
     private showFirstTime(): void {
         const point = this.hintPositions[this.currentPoint];
-        this.hand.scale.set(0.8);
+        this.hand.scale.set(lp(0.8, 0.5));
         this.hand.alpha = 1;
         this.hand.position.set(point.x, point.y);
         this.hand.angle = 0;
@@ -68,10 +68,11 @@ export class HintView extends Container {
     }
 
     private pointHand(): void {
+        const scale = lp(0.6, 0.4);
         anime({
             targets: this.hand.scale,
-            x: 0.6,
-            y: 0.6,
+            x: scale,
+            y: scale,
             duration: 500,
             easing: 'easeInOutCubic',
             direction: 'alternate',

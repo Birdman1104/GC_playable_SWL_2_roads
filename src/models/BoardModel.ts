@@ -269,7 +269,6 @@ const getAreaType = (building: BuildingType): AreaType => {
         case BuildingType.WinterFountain:
             return AreaType.Square;
         case BuildingType.Food:
-        case BuildingType.Park:
         case BuildingType.FortuneWheel:
         case BuildingType.Hospital:
             return AreaType.Rectangle;

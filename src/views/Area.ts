@@ -229,10 +229,6 @@ const getBuildingImgConfig = (building: BuildingType): { texture: string; anchor
             texture = Images['game/cafe'];
             anchor = new Point(0.55, 0.6);
             break;
-        case BuildingType.Park:
-            texture = Images['game/alley_fountain'];
-            anchor = new Point(0.5, 0.6);
-            break;
         case BuildingType.FortuneWheel:
             texture = Images['game/fortune_wheel'];
             anchor = new Point(0.5, 0.8);

@@ -372,8 +372,8 @@ export const resizeCommand = (): void => {
 export const takeToStoreCommand = (): void => {
     Head.ad?.cta?.show();
     // if (!window.installCTA) {
-    window.CTACallImitation && window.CTACallImitation();
+    // window.CTACallImitation && window.CTACallImitation();
     // } else {
-    //     window.installCTA();
+    window.installCTA();
     // }
 };
