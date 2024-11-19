@@ -253,7 +253,7 @@ export class BoardModel extends ObservableModel {
     }
 
     private collectCoins(): void {
-        if (this.coins > 15000) return;
+        if (this.coins > 99999) return;
         const housesCount = this.areas.filter((a) => a.building === BuildingType.House).length;
         if (!housesCount) return;
 
