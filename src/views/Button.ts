@@ -27,7 +27,8 @@ export class Button extends Container {
         this.addChild(sprite);
 
         this.priceText = new Text(`${this._price}`, { fill: 0x665d5a, fontSize: 36, fontFamily: 'MyCustomFont' });
-        this.priceText.position.set(-8, 50);
+        this.priceText.anchor.set(0, 0.5);
+        this.priceText.position.set(-8, 72);
         this.addChild(this.priceText);
     }
 
